@@ -1,15 +1,8 @@
 --Sherbakov ALeksandr 271
-prim' n d 
-	|(n==1) = False
-	|(n `div` 2)  < d = True
-	|(n `mod` d == 0) = False
-	|otherwise = prim' n (d+1)
-prim n = prim' n 2
+prim n = prim' 2 where
+	prim'  d = d*d>n || n `mod` d /= 0 && prim' (d+1)
 
-gcd' n m 
-	| (m > n) = gcd' m n
-	| ((n `mod` m) == 0) = m
-	| otherwise = gcd' m (n `mod` m)
+gcd' a b = (\r -> if r==0 then b else gcd' b r) $ mod a b
 		  
 rprim n m = (gcd' n m == 1)
 
@@ -26,6 +19,9 @@ lsd' n d sum
 	|(n `mod` d == 0) = lsd' n (d+1) (sum+d)
 	|otherwise = lsd' n (d+1) (sum)
 lsd n = lsd' n 1 0
+
+lsd n = lsd' 2 where
+	lsd' d = if (n `mod` d == 0) then d + lsd' (d+1) else lsd'(d+1)
 
 euler' n d ch
 	|(n == d) = ch
